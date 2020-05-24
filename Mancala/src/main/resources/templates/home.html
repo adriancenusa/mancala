@@ -1,0 +1,74 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+
+
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Mancala</title>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/app.js}"></script>
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+
+<body>
+<h1>Mancala !</h1>
+<div id="board" th:fragment="board">
+
+
+    <div th:if="${currentState.winnerMessage == null}">
+        <h2 th:text="'Player ' + ${currentState.playerTurn} + ' turn to play'"></h2>
+    </div>
+
+    <div th:if="${currentState.winnerMessage != null}">
+        <h1 class="winner" th:text="${currentState.winnerMessage}"></h1>
+    </div>
+
+
+    <table>
+        <tr>
+
+            <th rowspan="2">
+                <div class="mancala" th:text="${currentState.playerTwoMancala}"></div>
+            </th>
+
+            <td th:each="pocket, iterStat : ${currentState.playerTwoPockets}">
+                <button class="pocket" th:text="${pocket}"
+                        th:onclick="'javascript:play(\''+ ${iterStat.index} +'\');'"
+                        th:disabled="${currentState.playerTurn == 'ONE'}" }></button>
+            </td>
+
+            <th rowspan="2">
+                <div class="mancala" th:text="${currentState.playerOneMancala}">0</div>
+            </th>
+        </tr>
+        <tr>
+            <td th:each="pocket, iterStat : ${currentState.playerOnePockets}">
+                <button class="pocket" th:text="${pocket}"
+                        th:onclick="'javascript:play(\''+ ${iterStat.index} +'\');'"
+                        th:disabled="${currentState.playerTurn == 'TWO'}" }></button>
+
+            </td>
+        </tr>
+    </table>
+
+    <div th:if="${currentState.errorMessage != null}">
+        <h1 class="winner" th:text="${currentState.errorMessage}"></h1>
+    </div>
+</div>
+<h2>
+    <button class="resetButton" onclick="resetButton()">Reset game</button>
+</h2>
+
+<script>
+
+
+</script>
+
+</body>
+</html>
